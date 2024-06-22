@@ -9,5 +9,4 @@ List<Patient> getAllPatients();
 Patient createPatient(Patient patient);
 Patient viewPatientById(long id);
 void deletePatientById(long id);
-void updatePatient(Patient patient);
 }

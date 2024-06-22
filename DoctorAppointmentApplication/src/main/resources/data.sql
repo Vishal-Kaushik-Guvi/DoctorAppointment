@@ -1,4 +1,4 @@
-INSERT INTO doctors (id, name, specialization, email, phoneNumber) VALUES 
+INSERT INTO doctors (doctor_id, name, specialization, email, phone_number) VALUES 
 (1, 'Dr. John Smith', 'Cardiology', 'john.smith@example.com', '123-456-7890'),
 (2, 'Dr. Emily Johnson', 'Neurology', 'emily.johnson@example.com', '123-456-7891'),
 (3, 'Dr. Michael Brown', 'Pediatrics', 'michael.brown@example.com', '123-456-7892'),

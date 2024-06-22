@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Appointment History</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        .table-container {
+            max-width: 800px;
+            margin: 50px auto;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="table-container">
+        <h2 class="text-center">Appointment History</h2>
+        <table class="table table-striped table-responsive-md">
+            <thead>
+            <tr>
+                <th>Doctor Name</th>
+                <th>Patient Name</th>
+                <th>Appointment Date</th>
+                <th>Appointment Time</th>
+                <th>Appointment Slot</th>
+                <th>Appointment Charges</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="appointment : ${appointments}">
+                <td th:text="${appointment.doctor.name}">Doctor Name</td>
+                <td th:text="${appointment.user.name}">Patient Name</td>
+                <td th:text="${appointment.appointmentDate}">Appointment Date</td>
+                <td th:text="${appointment.appointmentTime}">Appointment Time</td>
+                <td th:text="${appointment.appointmentSlot}">Appointment Slot</td>
+                <td th:text="${appointment.appointmentCharges}">Appointment Charges</td>
+                <td>
+                    <form th:action="@{/deleteAppointment/{appointmentId}(appointmentId=${appointment.appointmentId})}" method="post" style="display:inline;">
+                        <input type="hidden" name="_csrf" th:value="${appointment.appointmentId}"/>
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('You Sure! Canceling the Appointment ?');">Cancel Appointment</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -11,3 +11,4 @@ public class DoctorAppointmentApplication {
 		System.out.println("Doctor appoitnment Application is running.....");
 	}
 }
+ 

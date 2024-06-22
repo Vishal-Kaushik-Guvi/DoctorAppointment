@@ -42,23 +42,4 @@ public class PatientServiceImpl implements PatientService {
         }
         patientRepository.deleteById(id);
     }
-
-    @Override
-    public void updatePatient(Patient patient) {
-        if (patient == null) {
-            throw new IllegalArgumentException("Patient cannot be null");
-        }
-
-        Optional<Patient> existingPatientOptional = patientRepository.findById(patient.getId());
-        if (!existingPatientOptional.isPresent()) {
-            throw new ResourceNotFound("Patient with ID " + patient.getId() + " not found");
-        }
-
-        Patient existingPatient = existingPatientOptional.get();
-        existingPatient.setName(patient.getName());
-        existingPatient.setMedicalHistory(patient.getMedicalHistory());
-        existingPatient.setAppointments(patient.getAppointments());
-
-        patientRepository.save(existingPatient);
-    }
 }

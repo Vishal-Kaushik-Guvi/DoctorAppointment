@@ -47,9 +47,9 @@ public class DoctorServiceImpl implements DoctorService {
             throw new IllegalArgumentException("Doctor cannot be null");
         }
 
-        Optional<Doctor> existingDoctorOptional = doctorRepository.findById(doctor.getId());
+        Optional<Doctor> existingDoctorOptional = doctorRepository.findById(doctor.getDoctorId());
         if (!existingDoctorOptional.isPresent()) {
-            throw new EntityNotFoundException("Doctor with ID " + doctor.getId() + " not found");
+            throw new EntityNotFoundException("Doctor with ID " + doctor.getDoctorId() + " not found");
         }
 
         Doctor existingDoctor = existingDoctorOptional.get();

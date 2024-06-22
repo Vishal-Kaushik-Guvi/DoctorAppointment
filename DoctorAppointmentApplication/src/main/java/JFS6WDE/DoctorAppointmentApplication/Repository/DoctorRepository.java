@@ -5,5 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import JFS6WDE.DoctorAppointmentApplication.Entity.Doctor;
 
 public interface DoctorRepository extends JpaRepository<Doctor, Long>{
+    Doctor findByName(String name);
 
 }

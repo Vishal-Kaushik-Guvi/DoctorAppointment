@@ -1,6 +1,7 @@
 package JFS6WDE.DoctorAppointmentApplication.Entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +18,8 @@ public class Doctor {
 
     // data of doctors already saved in the data.sql file
     @Id
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long doctorId;
 
     @Column(nullable = false)
     private String name;
@@ -26,6 +28,7 @@ public class Doctor {
     private String specialization;
 
     @Column(nullable = false)
+    @Email
     private String email;
 
     @Column(nullable = false)

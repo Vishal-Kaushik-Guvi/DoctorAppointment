@@ -97,6 +97,11 @@
             <tr>
                 <th>
                     <a th:href="@{'/page/' + ${currentPage} + '?sortField=name&sortDir=' + ${reverseSortDir}}">
+                        ID
+                    </a>
+                </th>
+                <th>
+                    <a th:href="@{'/page/' + ${currentPage} + '?sortField=name&sortDir=' + ${reverseSortDir}}">
                         Name
                     </a>
                 </th>
@@ -120,14 +125,15 @@
             </thead>
             <tbody>
                 <tr th:each="doctor : ${doctors}">
+                    <td th:text="${doctor.doctorId}">ID</td>
                     <td th:text="${doctor.name}">Name</td>
                     <td th:text="${doctor.specialization}">Specialization</td>
                     <td th:text="${doctor.email}">Email</td>
                     <td th:text="${doctor.phoneNumber}">Phone Number</td>
                     <td>
-                        <a th:href="@{/updateDoctor(id=${doctor.id})}" class="btn btn-primary btn-sm">Update</a><br>
+                        <a th:href="@{/updateDoctor/{id}(id=${doctor.doctorId})}" class="btn btn-primary btn-sm">Update</a><br>
                         <form th:action="@{/deleteDoctor}" method="post" style="display:inline;">
-                            <input type="hidden" name="id" th:value="${doctor.id}"/>
+                            <input type="hidden" name="id" th:value="${doctor.doctorId}"/>
                             <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                         </form>
                     </td>

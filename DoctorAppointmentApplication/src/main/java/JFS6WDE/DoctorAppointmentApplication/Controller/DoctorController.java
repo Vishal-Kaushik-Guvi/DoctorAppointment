@@ -1,9 +1,8 @@
 package JFS6WDE.DoctorAppointmentApplication.Controller;
 
 import JFS6WDE.DoctorAppointmentApplication.Entity.Doctor;
-import JFS6WDE.DoctorAppointmentApplication.Service.DoctorServiceImpl;
+import JFS6WDE.DoctorAppointmentApplication.Service.DoctorService;
 import jakarta.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -17,18 +16,11 @@ import java.util.List;
 public class DoctorController {
 
     @Autowired
-    private DoctorServiceImpl doctorService;
+    private DoctorService doctorService;
     
-    @GetMapping("/")
-    public String viewHomePage(Model model) {
-        return findPaginated(1, "name", "asc", model);
-    }
-
-    @GetMapping("doctorList")
+    @GetMapping("/doctorList")
     public String showDoctors(Model model) {
-        List<Doctor> doctors = doctorService.getAllDoctors();
-        model.addAttribute("doctors", doctors);
-        return "doctorlist";
+        return findPaginated(1, "name", "asc", model);
     }
 
     @GetMapping("/addDoctor")
@@ -53,10 +45,13 @@ public class DoctorController {
         return "updatedoctor";
     }
 
-    @PostMapping("/updateDoctor/{id}")
-    public String updateDoctor(@PathVariable("id") @Valid @ModelAttribute("doctor") Doctor doctor, BindingResult result, Model model) {
-         doctorService.updateDoctor(doctor);
-         return "updatedoctor";
+    @PostMapping("/updateDoctor")
+    public String updateDoctor(@Valid @ModelAttribute("doctor") Doctor doctor, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            return "updatedoctor";
+        }
+        doctorService.updateDoctor(doctor);
+        return "redirect:/doctorList";
     }
 
     @PostMapping("/deleteDoctor")
@@ -64,6 +59,7 @@ public class DoctorController {
         doctorService.deleteDoctorById(id);
         return "redirect:/doctorList";
     }
+
     @GetMapping("/page/{pageNo}")
     public String findPaginated(@PathVariable(value = "pageNo") int pageNo,
                                 @RequestParam("sortField") String sortField,
@@ -71,15 +67,14 @@ public class DoctorController {
                                 Model model) {
         int pageSize = 5;
         Page<Doctor> page = doctorService.findPaginated(pageNo, pageSize, sortField, sortDir);
-        List<Doctor> listBus = page.getContent();
+        List<Doctor> listDoctors = page.getContent();
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());
         model.addAttribute("sortField", sortField);
         model.addAttribute("sortDir", sortDir);
         model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
-        model.addAttribute("listBus", listBus);
+        model.addAttribute("doctors", listDoctors);
         return "doctorlist";
     }
 }
-
