@@ -1,170 +1,141 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>Doctor Management Application</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        body {
-            padding-top: 70px; /* Adjust for fixed navbar */
-            background-color: #a2db37;
-        }
-        .navbar-brand {
-            display: flex;
-            align-items: center;
-        }
-        .navbar-brand h1 {
-            margin-left: 430px;
-            margin-bottom: 10px;
-            margin-top: 10px;
-            font-size: 2.5rem;
-            color: #ffffff;
-        }
-        .navbar-dark {
-            background-color: #000102;
-        }
-        .table-container {
-            background-color: #ffffff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            margin-top: 20px;
-        }
-        .pagination-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 20px;
-        }
-        .pagination a {
-            color: #343a40;
-            font-weight: bold;
-        }
-        .table thead th {
-            background-color: #343a40;
-            color: #ffffff;
-        }
-        .btn-info, .btn-primary, .btn-danger {
-            color: #ffffff;
-        }
-        .btn-info {
-            background-color: #17a2b8;
-            border: none;
-        }
-        .btn-primary {
-            background-color: #007bff;
-            border: none;
-        }
-        .btn-danger {
-            background-color: #dc3545;
-            border: none;
-        }
-        .btn-secondary {
-            background-color: #6c757d;
-            border: none;
-        }
-        .page-link {
-            color: #17a2b8;
-        }
-        .page-link:hover {
-            background-color: #f8f9fa;
-        }
-    </style>
+
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
+
 <body>
-<!-- Header part -->
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
-    <div class="container">
-        <a class="navbar-brand" href="#">
-            <h1>View Doctors</h1>
-        </a>
-        <div class="ml-auto">
-            <a href="/appointmentHistory" class="btn btn-danger">Appointment List</a>
-            <a href="/logout" class="btn btn-danger">Logout</a>
+    
+    <header>
+        <div class="header-content d-flex justify-content-between align-items-center">
+            <div class="header-title">
+                <h1>Doctor Appointment Application</h1>
+            </div>
+            <div class="header-button">
+                <a href="/appointmentHistory" class="btn btn-primary mr-2">Appointment History</a>
+                <a href="/logout" class="btn btn-danger">Logout</a>
+            </div>
+        </div>
+        <div class="header-image">
+            <img src="https://i.ibb.co/hYJJ2bb/20049.jpg" alt="Header Image">
+        </div>
+    </header>
+
+    <!-- Tabular data with pagination -->
+    <div class="container my-5">
+        <div class="table-container">
+            <table class="table table-striped table-responsive-md">
+                <thead>
+                    <tr>
+                        <th>
+                            <a
+                                th:href="@{'/patient/page/' + ${currentPage} + '?sortField=id&sortDir=' + ${reverseSortDir}}">
+                                ID
+                            </a>
+                        </th>
+                        <th>
+                            <a
+                                th:href="@{'/patient/page/' + ${currentPage} + '?sortField=name&sortDir=' + ${reverseSortDir}}">
+                                Name
+                            </a>
+                        </th>
+                        <th>
+                            <a
+                                th:href="@{'/patient/page/' + ${currentPage} + '?sortField=specialization&sortDir=' + ${reverseSortDir}}">
+                                Specialization
+                            </a>
+                        </th>
+                        <th>
+                            <a
+                                th:href="@{'/patient/page/' + ${currentPage} + '?sortField=email&sortDir=' + ${reverseSortDir}}">
+                                Email
+                            </a>
+                        </th>
+                        <th>
+                            <a
+                                th:href="@{'/patient/page/' + ${currentPage} + '?sortField=phoneNumber&sortDir=' + ${reverseSortDir}}">
+                                Phone Number
+                            </a>
+                        </th>
+                        <th>Medication and Appointment Section</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="doctor : ${doctors}">
+                        <td th:text="${doctor.doctorId}">ID</td>
+                        <td th:text="${doctor.name}">Name</td>
+                        <td th:text="${doctor.specialization}">Specialization</td>
+                        <td th:text="${doctor.email}">Email</td>
+                        <td th:text="${doctor.phoneNumber}">Phone Number</td>
+                        <td>
+                            <form th:action="@{'/addAppointment'}" method="get" style="display:inline;">
+                                <input type="hidden" name="doctorId" th:value="${doctor.doctorId}" />
+                                <button type="submit" class="btn btn-primary btn-sm">Book Appointment</button>
+                            </form>
+                            <form th:action="@{'/addMedication'}" method="get" style="display:inline;">
+                                <input type="hidden" name="doctorId" th:value="${doctor.doctorId}" />
+                                <button type="submit" class="btn btn-primary btn-sm">Add Medications</button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div th:if="${totalPages > 1}" class="pagination-container">
+            <div>Total Rows: [[${totalItems}]]</div>
+            <nav>
+                <ul class="pagination">
+                    <li class="page-item" th:if="${currentPage > 1}">
+                        <a class="page-link"
+                            th:href="@{'/patient/page/' + ${currentPage - 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Previous</a>
+                    </li>
+                    <li class="page-item" th:each="i : ${#numbers.sequence(1, totalPages)}">
+                        <a class="page-link" th:if="${currentPage != i}"
+                            th:href="@{'/patient/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+                        <span class="page-link" th:unless="${currentPage != i}">[[${i}]]</span>
+                    </li>
+                    <li class="page-item" th:if="${currentPage < totalPages}">
+                        <a class="page-link"
+                            th:href="@{'/patient/page/' + ${currentPage + 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>
+                    </li>
+                </ul>
+            </nav>
         </div>
     </div>
-</nav>
 
-<!-- Tabular data with pagination -->
-<div class="container my-5">
-    <div class="text-center">
-        <h1>User Dashboard</h1>
-    </div>
-    <div class="table-container">
-        <table class="table table-striped table-responsive-md">
-            <thead>
-            <tr>
-                <th>
-                    <a th:href="@{'/patient/page/' + ${currentPage} + '?sortField=id&sortDir=' + ${reverseSortDir}}">
-                        ID
-                    </a>
-                </th>
-                <th>
-                    <a th:href="@{'/patient/page/' + ${currentPage} + '?sortField=name&sortDir=' + ${reverseSortDir}}">
-                        Name
-                    </a>
-                </th>
-                <th>
-                    <a th:href="@{'/patient/page/' + ${currentPage} + '?sortField=specialization&sortDir=' + ${reverseSortDir}}">
-                        Specialization
-                    </a>
-                </th>
-                <th>
-                    <a th:href="@{'/patient/page/' + ${currentPage} + '?sortField=email&sortDir=' + ${reverseSortDir}}">
-                        Email
-                    </a>
-                </th>
-                <th>
-                    <a th:href="@{'/patient/page/' + ${currentPage} + '?sortField=phoneNumber&sortDir=' + ${reverseSortDir}}">
-                        Phone Number
-                    </a>
-                </th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-                <tr th:each="doctor : ${doctors}">
-                    <td th:text="${doctor.doctorId}">ID</td>
-                    <td th:text="${doctor.name}">Name</td>
-                    <td th:text="${doctor.specialization}">Specialization</td>
-                    <td th:text="${doctor.email}">Email</td>
-                    <td th:text="${doctor.phoneNumber}">Phone Number</td>
-                    <td>
-                        <form th:action="@{'/addAppointment'}" method="get" style="display:inline;">
-                            <input type="hidden" name="doctorId" th:value="${doctor.doctorId}"/>
-                            <button type="submit" class="btn btn-primary btn-sm">Book Appointment</button>
-                        </form>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div th:if="${totalPages > 1}" class="pagination-container">
-        <div>Total Rows: [[${totalItems}]]</div>
-        <nav>
-            <ul class="pagination">
-                <li class="page-item" th:if="${currentPage > 1}">
-                    <a class="page-link" th:href="@{'/patient/page/' + ${currentPage - 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Previous</a>
-                </li>
-                <li class="page-item" th:each="i : ${#numbers.sequence(1, totalPages)}">
-                    <a class="page-link" th:if="${currentPage != i}" th:href="@{'/patient/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
-                    <span class="page-link" th:unless="${currentPage != i}">[[${i}]]</span>
-                </li>
-                <li class="page-item" th:if="${currentPage < totalPages}">
-                    <a class="page-link" th:href="@{'/patient/page/' + ${currentPage + 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>
-                </li>
-            </ul>
-        </nav>
-    </div>
-</div>
-
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" 
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
         integrity="sha384-wHAi8ZH4CfwC/7e3gO6dYN2YcAksWzk1bwQ3g7buCNYoAn6WLGjCwECwHGsIQ2Il"
         crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
-        integrity="sha384-B0UglyR+ni8XKzOZbKI2F3k6G8zKR49S8Ff4VVzq+zQZ6p3zgzR0PBpC7rP47kC" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+        integrity="sha384-B0UglyR+ni8XKzOZbKI2F3k6G8zKR49S8Ff4VVzq+zQZ6p3zgzR0PBpC7rP47kC"
+        crossorigin="anonymous"></script>
+
+    <!-- Javascript for sidebar-->
+    <script src="assets/js/jquery-3.3.1.min.js"></script>
+    <script src="assets/js/jquery-migrate-3.0.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="assets/js/jquery.backstretch.min.js"></script>
+    <script src="assets/js/wow.min.js"></script>
+    <script src="assets/js/jquery.waypoints.min.js"></script>
+    <script src="assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="assets/js/scripts.js"></script>
+
+    <script src="/static/js/index.js" th:src="@{/js/index.js}"></script>
+
 </body>
+
 </html>

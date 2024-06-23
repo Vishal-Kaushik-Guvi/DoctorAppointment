@@ -42,7 +42,7 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
-    public void updateDoctor(Doctor doctor) {
+    public Doctor updateDoctor(Doctor doctor) {
         if (doctor == null) {
             throw new IllegalArgumentException("Doctor cannot be null");
         }
@@ -57,10 +57,8 @@ public class DoctorServiceImpl implements DoctorService {
         existingDoctor.setSpecialization(doctor.getSpecialization());
         existingDoctor.setEmail(doctor.getEmail());
         existingDoctor.setPhoneNumber(doctor.getPhoneNumber());
-        existingDoctor.setAppointments(doctor.getAppointments());
-        existingDoctor.setMedications(doctor.getMedications());
 
-        doctorRepository.save(existingDoctor);
+       return doctorRepository.save(existingDoctor);
     }
 
     @Override

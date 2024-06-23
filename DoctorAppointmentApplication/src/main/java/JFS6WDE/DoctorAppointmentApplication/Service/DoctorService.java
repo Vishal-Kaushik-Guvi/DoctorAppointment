@@ -11,7 +11,7 @@ List<Doctor> getAllDoctors();
 Doctor createDoctor(Doctor doctor);
 void deleteDoctorById(long id);
 Doctor viewDoctorById(long id);
-void updateDoctor(Doctor doctor);
+Doctor updateDoctor(Doctor doctor);
 
 Page<Doctor> findPaginated(int pageNo,int pageSize,String sortField,String sortDirection);
 

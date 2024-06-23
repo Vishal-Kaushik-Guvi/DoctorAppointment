@@ -42,6 +42,7 @@ public class SpringSecurity {
                         .requestMatchers("/h2-console/**", "/register/**", "/js/**", "/css/**", "/img/**").permitAll()
                         .requestMatchers("/login**", "/register**").permitAll()
                         .requestMatchers("/doctorList").hasRole("ADMIN")
+                        .requestMatchers("/addDoctor","/updateDoctor").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .formLogin(formLogin -> formLogin
                         .loginPage("/login")

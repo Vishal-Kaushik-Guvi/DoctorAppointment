@@ -1,0 +1,67 @@
+body {
+    background-image: url('https://i.ibb.co/Z2hYHjQ/Registration-Background.jpg');
+    background-size: cover;
+    padding-top: 70px;
+    overflow: hidden;
+}
+
+.card {
+    border-radius: 15px;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+}
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+.container {
+    margin-top: 50px;
+}
+header {
+    border-radius: 5px 5px 5px 5px;
+    position: relative;
+    bottom: 120px;
+    background-color: black;
+    padding: 10px 0;
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-title h1 {
+    position: relative;
+    top: 70px;
+    left: 270px;
+    margin: 0;
+    font-weight: bolder;
+    color: white;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.header-image img {
+    height: 100px;
+    /* Adjust the height as needed */
+    width: 100%;
+    object-fit: cover;
+}
+
+.header-button {
+    position: relative;
+    top: 75px;
+    left: 80px;
+}
+.card{
+    font-weight: bold;
+    position: relative;
+    bottom: 100px;
+    background-color: lightskyblue;
+    border: 2px solid black;
+}

@@ -6,9 +6,14 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import JFS6WDE.DoctorAppointmentApplication.Dto.MedicationDto;
+import JFS6WDE.DoctorAppointmentApplication.Entity.Doctor;
 import JFS6WDE.DoctorAppointmentApplication.Entity.Medication;
+import JFS6WDE.DoctorAppointmentApplication.Entity.User;
 import JFS6WDE.DoctorAppointmentApplication.Exception.ResourceNotFound;
+import JFS6WDE.DoctorAppointmentApplication.Repository.DoctorRepository;
 import JFS6WDE.DoctorAppointmentApplication.Repository.MedicationRepository;
+import JFS6WDE.DoctorAppointmentApplication.Repository.UserRepository;
 
 @Service
 public class MedicationServiceImpl implements MedicationService {
@@ -16,14 +21,15 @@ public class MedicationServiceImpl implements MedicationService {
     @Autowired
     private MedicationRepository medicationRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private DoctorRepository doctorRepository;
+
     @Override
     public List<Medication> getAllMedications() {
         return medicationRepository.findAll();
-    }
-
-    @Override
-    public Medication createMedication(Medication medication) {
-        return medicationRepository.save(medication);
     }
 
     @Override
@@ -63,5 +69,29 @@ public class MedicationServiceImpl implements MedicationService {
         existingMedication.setDoctor(medication.getDoctor());
 
         medicationRepository.save(existingMedication);
+    }
+
+    @Override
+    public Medication createMedication(MedicationDto medicationDto, String name, long id) {
+        User user = userRepository.findByName(name);
+        if (user == null) {
+            throw new ResourceNotFound("User not found with username: " + name);
+        }
+
+        Doctor doctor = doctorRepository.findById(id)
+            .orElseThrow(() -> new ResourceNotFound("Doctor not found with ID: " + id));
+
+        Medication medication = new Medication();
+
+         medication.setName(medicationDto.getName());
+         medication.setDosage(medicationDto.getDosage());
+         medication.setFrequency(medicationDto.getFrequency());
+         medication.setStartDate(medicationDto.getStartDate());
+         medicationDto.setEndDate(medicationDto.getEndDate());
+
+        medication.setDoctor(doctor);
+        medication.setUser(user);
+
+        return medicationRepository.save(medication);
     }
 }

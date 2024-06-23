@@ -1,0 +1,110 @@
+body {
+    padding-top: 70px;
+    /* Adjust for fixed navbar */
+    background-image: url('https://i.ibb.co/HxyXmjv/19373.jpg');
+    background-size: cover;
+    overflow: hidden;
+}
+
+header {
+    border-radius: 5px 5px 5px 5px;
+    position: relative;
+    bottom: 120px;
+    background-color: black;
+    padding: 10px 0;
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-title h1 {
+    position: relative;
+    top: 70px;
+    left: 250px;
+    margin: 0;
+    font-weight: bolder;
+    color: white;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.header-image img {
+    height: 100px; /* Adjust the height as needed */
+    width: 100%;
+    object-fit: cover;
+}
+
+.header-button{
+    position: relative;
+    top: 75px;
+    left: 80px;
+}
+
+.navbar-dark {
+    background-color: #000102;
+}
+
+.table-container {
+    position: relative;
+    bottom: 150px;
+    background-color: lightblue;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1);
+}
+
+.pagination-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.pagination a {
+    color: #343a40;
+    font-weight: bold;
+}
+
+.table thead th {
+    background-color: #343a40;
+    color: #ffffff;
+}
+
+.btn-info,
+.btn-primary,
+.btn-danger {
+    color: #ffffff;
+}
+
+.btn-info {
+    background-color: #17a2b8;
+    border: none;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    border: none;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    border: none;
+}
+
+.page-link {
+    color: #17a2b8;
+}
+
+.page-link:hover {
+    background-color: #f8f9fa;
+}

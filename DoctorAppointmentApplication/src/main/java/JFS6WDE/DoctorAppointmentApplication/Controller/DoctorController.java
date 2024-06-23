@@ -38,8 +38,8 @@ public class DoctorController {
         return "redirect:/doctorList";
     }
 
-    @GetMapping("/updateDoctor/{id}")
-    public String showUpdateDoctorForm(@PathVariable("id") Long id, Model model) {
+    @GetMapping("/updateDoctor")
+    public String showUpdateDoctorForm(@RequestParam("id") Long id, Model model) {
         Doctor doctor = doctorService.viewDoctorById(id);
         model.addAttribute("doctor", doctor);
         return "updatedoctor";

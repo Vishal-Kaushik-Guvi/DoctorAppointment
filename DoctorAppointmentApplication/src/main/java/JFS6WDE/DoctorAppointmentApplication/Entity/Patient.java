@@ -20,4 +20,5 @@ public class Patient {
 
     @Column(name = "Medical_History")
     private String medicalHistory;
+
 }
