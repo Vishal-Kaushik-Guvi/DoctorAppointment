@@ -50,7 +50,7 @@ public class MedicationServiceImpl implements MedicationService {
     }
 
     @Override
-    public void updateMedication(Medication medication) {
+    public Medication updateMedication(Medication medication) {
         if (medication == null) {
             throw new IllegalArgumentException("Medication cannot be null");
         }
@@ -66,9 +66,8 @@ public class MedicationServiceImpl implements MedicationService {
         existingMedication.setFrequency(medication.getFrequency());
         existingMedication.setStartDate(medication.getStartDate());
         existingMedication.setEndDate(medication.getEndDate());
-        existingMedication.setDoctor(medication.getDoctor());
 
-        medicationRepository.save(existingMedication);
+        return medicationRepository.save(existingMedication);
     }
 
     @Override

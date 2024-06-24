@@ -1,5 +1,7 @@
 package JFS6WDE.DoctorAppointmentApplication.Entity;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,6 +21,6 @@ public class Patient {
     private String name;
 
     @Column(name = "Medical_History")
-    private String medicalHistory;
+    private LocalDate medicalHistory;
 
 }

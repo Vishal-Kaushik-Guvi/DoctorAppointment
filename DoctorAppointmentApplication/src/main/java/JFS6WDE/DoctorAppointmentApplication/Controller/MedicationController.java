@@ -41,12 +41,9 @@ public class MedicationController {
     }
 
     @PostMapping("/updateMedication")
-    public String updateMedication(@Valid @ModelAttribute("medication") Medication medication,
-                                   BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            return "updatemedication";
-        }
+    public String updateMedication(@ModelAttribute("medication") Medication medication, Model model) {
         medicationService.updateMedication(medication);
+        model.addAttribute("success", true);
         return "redirect:/medicationList";
     }
 

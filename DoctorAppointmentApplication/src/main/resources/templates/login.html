@@ -23,8 +23,12 @@
 <div class="container">
     <div class="row">
 
-        <div id="errorAlert" class="alert alert-danger" style="display: none; position: absolute; top: 10px; left: 50%; transform: translateX(-50%);">
-            Invalid email or password.
+        <div th:if="${param.error}">
+            <script>
+                  window.onload = function() {
+        alert("Invalid input")
+    }
+        </script>
         </div>
 
         <div class="col-md-6 offset-md-3">

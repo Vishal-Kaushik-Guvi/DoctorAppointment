@@ -9,7 +9,7 @@ public interface MedicationService {
 List<Medication> getAllMedications();
 void deleteMedicationById(long id);
 Medication viewMedicationById(long id);
-void updateMedication(Medication medication);
+Medication updateMedication(Medication medication);
 
 Medication createMedication(MedicationDto medicationDto, String name, long id);
 }

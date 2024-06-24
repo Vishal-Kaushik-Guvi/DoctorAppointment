@@ -59,10 +59,11 @@ header {
 }
 
 .pagination-container {
+    position: relative;
+    bottom: 130px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 20px;
 }
 
 .pagination a {
